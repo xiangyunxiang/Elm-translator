@@ -1,18 +1,12 @@
-module Main where
-
-import Microbit.Basic ( forever, showNumber )
-import Microbit.Input ( onPressButton_A, onPressButton_B )
+import Parser.Parser ( parseProgram )
+import AST
+import Translator.Translator ( translate )
 
 main :: IO ()
-main = do
-  args <- getArgs
-  case args of
-    [filename] -> do
-
-      source <- readFile (head args)
-
-      case parseProgram source of
-        Right program -> putStrLn "Loaded successfully" >> run_prog program
+main = do 
+    putStrLn "Please enter the file to be translated:"
+    file <- getLine 
+    input <- readFile file
+    case parseProgram input of
+        Right program -> print program >> translate program
         Left err -> print err
-    _ -> putStrLn "Usage: elm <filename>"
-  return ()
