@@ -8,5 +8,5 @@ main = do
     file <- getLine 
     input <- readFile file
     case parseProgram input of
-        Right program -> print program >> translate program
+        Right program -> print "Parse Successfully" >> translate program
         Left err -> print err
